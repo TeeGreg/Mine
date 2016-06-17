@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>Mine</title>
-		<link rel="stylesheet" href="feuille.css" />
-        
+    <head>
+        <meta charset="utf-8" />
+        <title>Mine</title>
+        <link rel="stylesheet" href="feuille.css" />
 
-	</head>
 
-	<body>
-    	<script>
+    </head>
+
+    <body>
+        <script>
+            size = 40;
+            nmbbomb = 10;
             function testforcoord(a, b)  {
-                return a >= 0 && a < 10 && b >= 0 && b < 10;
+                return a >= 0 && a < size && b >= 0 && b < size;
             }
             function rand(a, b) {
                 return Math.floor((Math.random() * (b - a + 1)) + a);
@@ -22,65 +24,65 @@
             function fun() {
 
             var blab = "";
-            
-            for (var i = 0; i < 10; i++) {
-                for (var j = 0; j < 10; j ++) {
-                    board[i * 10 + j] = false;
-                    help[i * 10 + j] = 0;
-                    guess[i * 10 + j] = false;
+
+            for (var i = 0; i < size; i++) {
+                for (var j = 0; j < size; j ++) {
+                    board[i * size + j] = false;
+                    help[i * size + j] = 0;
+                    guess[i * size + j] = false;
                 }
             }
-            
+
             var count = 0;
-            while (count != 10) {
-                 var i = rand(0, 9);
-                 var j = rand(0, 9);
-                 if (board[i * 10 + j] == false) {
-                    board[i * 10 + j] = true;
-                    count ++;   
-                     
+            while (count != nmbbomb) {
+                 var i = rand(0, size - 1);
+                 var j = rand(0, size - 1);
+                 if (board[i * size + j] == false) {
+                    board[i * size + j] = true;
+                    count ++;
+
                      if (testforcoord(i + 1, j)) {
-                        help[(i + 1) * 10 +  j] ++;
+                        help[(i + 1) * size +  j] ++;
                      }
                      if (testforcoord(i + 1, j + 1)) {
-                        help[(i + 1) * 10 + (j + 1)] ++;
+                        help[(i + 1) * size + (j + 1)] ++;
                      }
                      if (testforcoord(i + 1, j - 1)) {
-                        help[(i + 1) * 10 + (j - 1)] ++;
+                        help[(i + 1) * size + (j - 1)] ++;
                      }
                      if (testforcoord(i, j + 1)) {
-                        help[i * 10 +  (j + 1)] ++;
+                        help[i * size +  (j + 1)] ++;
                      }
                      if (testforcoord(i, j - 1)) {
-                        help[i * 10 + (j - 1)] ++;
+                        help[i * size + (j - 1)] ++;
                      }
                      if (testforcoord(i - 1, j)) {
-                        help[(i - 1) * 10 +  j] ++;
+                        help[(i - 1) * size +  j] ++;
                      }
                      if (testforcoord(i - 1, j + 1)) {
-                        help[(i - 1) * 10 + ( j + 1)] ++;
+                        help[(i - 1) * size + ( j + 1)] ++;
                      }
                      if (testforcoord(i - 1, j - 1)) {
-                        help[(i - 1) * 10 +  (j - 1)] ++;
+                        help[(i - 1) * size +  (j - 1)] ++;
                      }
                  }
-          
+
             }
-            
-            
+
+
             blab += "<table>";
-            
-            for (i = 0; i < 10; i++) {
+
+            for (i = 0; i < size; i++) {
                 blab += "<tr>";
-                for (j = 0; j < 10; j ++) {
+                for (j = 0; j < size; j ++) {
                     blab += "<td>";
                     blab += "<button type='button' onclick='act("+ i +","+ j +")'>";
                     blab += "<strong>";
                     blab += "$";
-                    blab += "</strong>";                    
+                    blab += "</strong>";
                     blab += "</button>";
                     blab += "</td>";
-                 
+
                 }
                 blab += "</tr>";
             }
@@ -88,50 +90,64 @@
             document.getElementById('content').innerHTML = blab;
             return blab;
             }
-            
-            function act(i , j) {
-            if ( !guess[i * 10 + j]) {    
-                guess[i * 10 + j] = true;
-            
-                if ( help[i * 10 + j] == 0) {
-                    if (testforcoord(i + 1, j)) act(i + 1, j);
-                    if (testforcoord(i - 1, j)) act(i - 1, j);
-                    if (testforcoord(i + 1, j + 1)) act(i + 1, j + 1);
-                    if (testforcoord(i + 1, j - 1)) act(i + 1, j - 1);
-                    if (testforcoord(i - 1, j + 1)) act(i - 1, j + 1);
-                    if (testforcoord(i - 1, j - 1)) act(i - 1, j - 1);
-                    if (testforcoord(i, j + 1)) act(i, j + 1);
-                    if (testforcoord(i, j - 1)) act(i, j - 1);
+
+            function upd(i , j) {
+                if ( !guess[i * size + j]) {
+                    guess[i * size + j] = true;
+
+                    if ( help[i * size + j] == 0) {
+                        if (testforcoord(i + 1, j)) upd(i + 1, j);
+                        if (testforcoord(i - 1, j)) upd(i - 1, j);
+                        if (testforcoord(i + 1, j + 1)) upd(i + 1, j + 1);
+                        if (testforcoord(i + 1, j - 1)) upd(i + 1, j - 1);
+                        if (testforcoord(i - 1, j + 1)) upd(i - 1, j + 1);
+                        if (testforcoord(i - 1, j - 1)) upd(i - 1, j - 1);
+                        if (testforcoord(i, j + 1)) upd(i, j + 1);
+                        if (testforcoord(i, j - 1)) upd(i, j - 1);
+                    }
                 }
-                
+            }
+            
+            function act(a,b) {
+                upd(a,b);
+                disp();
+            }
+            
+            function disp() {
+                count = 0;
                 blab = "<table>";
-                
-                for (i = 0; i < 10; i++) {
+
+                for (i = 0; i < size; i++) {
                     blab += "<tr>";
-                    for (j = 0; j < 10; j ++) {
+                    for (j = 0; j < size; j ++) {
+                        if (!guess[i * size + j]) count ++;
                         blab += "<td>";
                         blab += "<button type='button' onclick='act("+ i +","+ j +")'>";
                         blab += "<strong>";
-                        blab += guess[i * 10 + j] ? help[i * 10 + j] : "$";
+                        blab += guess[i * size + j] ? board[i * size + j] ? "B" : help[i * size + j] : "$";
                         blab += "</strong>";
                         blab += "</button>";
                         blab += "</td>";
-                     
+
                     }
                     blab += "</tr>";
                 }
                 blab += "</table>";
+                if (count == nmbbomb) blab += "Vous avez Gagn&eacute";
+                
                 document.getElementById('content').innerHTML = blab;
-                }
-            }
+           }
+            
+            
+            
             
             </script>
-		
-    
+
+
     <button type="button" onclick="fun()">
         Reset.
     </button>
-		<p id="content">
-        </p>	
-	</body>
+        <p id="content">
+        </p>
+    </body>
 </html>
