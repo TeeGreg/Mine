@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Mine</title>
+		<link rel="stylesheet" href="feuille.css" />
+        
+
+	</head>
+
+	<body>
+    	<script>
+            function testforcoord(a, b)  {
+                return a >= 0 && a < 10 && b >= 0 && b < 10;
+            }
+            function rand(a, b) {
+                return Math.floor((Math.random() * (b - a + 1)) + a);
+            }
+            var board = [];
+            var help = [];
+            var guess = [] ;
+            function fun() {
+
+            var blab = "";
+            
+            for (var i = 0; i < 10; i++) {
+                for (var j = 0; j < 10; j ++) {
+                    board[i * 10 + j] = false;
+                    help[i * 10 + j] = 0;
+                    guess[i * 10 + j] = false;
+                }
+            }
+            
+            var count = 0;
+            while (count != 10) {
+                 var i = rand(0, 9);
+                 var j = rand(0, 9);
+                 if (board[i * 10 + j] == false) {
+                    board[i * 10 + j] = true;
+                    count ++;   
+                     
+                     if (testforcoord(i + 1, j)) {
+                        help[(i + 1) * 10 +  j] ++;
+                     }
+                     if (testforcoord(i + 1, j + 1)) {
+                        help[(i + 1) * 10 + (j + 1)] ++;
+                     }
+                     if (testforcoord(i + 1, j - 1)) {
+                        help[(i + 1) * 10 + (j - 1)] ++;
+                     }
+                     if (testforcoord(i, j + 1)) {
+                        help[i * 10 +  (j + 1)] ++;
+                     }
+                     if (testforcoord(i, j - 1)) {
+                        help[i * 10 + (j - 1)] ++;
+                     }
+                     if (testforcoord(i - 1, j)) {
+                        help[(i - 1) * 10 +  j] ++;
+                     }
+                     if (testforcoord(i - 1, j + 1)) {
+                        help[(i - 1) * 10 + ( j + 1)] ++;
+                     }
+                     if (testforcoord(i - 1, j - 1)) {
+                        help[(i - 1) * 10 +  (j - 1)] ++;
+                     }
+                 }
+          
+            }
+            
+            
+            blab += "<table>";
+            
+            for (i = 0; i < 10; i++) {
+                blab += "<tr>";
+                for (j = 0; j < 10; j ++) {
+                    blab += "<td>";
+                    blab += "<button type='button' onclick='act("+ i +","+ j +")'>";
+                    blab += "<strong>";
+                    blab += "$";
+                    blab += "</strong>";                    
+                    blab += "</button>";
+                    blab += "</td>";
+                 
+                }
+                blab += "</tr>";
+            }
+            blab += "</table>";
+            document.getElementById('content').innerHTML = blab;
+            return blab;
+            }
+            
+            function act(i , j) {
+            if ( !guess[i * 10 + j]) {    
+                guess[i * 10 + j] = true;
+            
+                if ( help[i * 10 + j] == 0) {
+                    if (testforcoord(i + 1, j)) act(i + 1, j);
+                    if (testforcoord(i - 1, j)) act(i - 1, j);
+                    if (testforcoord(i + 1, j + 1)) act(i + 1, j + 1);
+                    if (testforcoord(i + 1, j - 1)) act(i + 1, j - 1);
+                    if (testforcoord(i - 1, j + 1)) act(i - 1, j + 1);
+                    if (testforcoord(i - 1, j - 1)) act(i - 1, j - 1);
+                    if (testforcoord(i, j + 1)) act(i, j + 1);
+                    if (testforcoord(i, j - 1)) act(i, j - 1);
+                }
+                
+                blab = "<table>";
+                
+                for (i = 0; i < 10; i++) {
+                    blab += "<tr>";
+                    for (j = 0; j < 10; j ++) {
+                        blab += "<td>";
+                        blab += "<button type='button' onclick='act("+ i +","+ j +")'>";
+                        blab += "<strong>";
+                        blab += guess[i * 10 + j] ? help[i * 10 + j] : "$";
+                        blab += "</strong>";
+                        blab += "</button>";
+                        blab += "</td>";
+                     
+                    }
+                    blab += "</tr>";
+                }
+                blab += "</table>";
+                document.getElementById('content').innerHTML = blab;
+                }
+            }
+            
+            </script>
+		
+    
+    <button type="button" onclick="fun()">
+        Reset.
+    </button>
+		<p id="content">
+        </p>	
+	</body>
+</html>
