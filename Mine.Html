@@ -10,7 +10,8 @@
 
     <body>
         <script>
-            size = 40;
+            mode = 1;
+            size = 10;
             nmbbomb = 10;
             function testforcoord(a, b)  {
                 return a >= 0 && a < size && b >= 0 && b < size;
@@ -18,11 +19,16 @@
             function rand(a, b) {
                 return Math.floor((Math.random() * (b - a + 1)) + a);
             }
-            var board = [];
-            var help = [];
-            var guess = [] ;
+            
+            function cool(i) {
+                mode = i;
+            }
+            
+             board = [];
+             help = [];
+             guess = [] ;
             function fun() {
-
+            failure = false;
             var blab = "";
 
             for (var i = 0; i < size; i++) {
@@ -109,8 +115,17 @@
             }
             
             function act(a,b) {
+                if (mode == 1) {
                 upd(a,b);
+                } else {
+                    if (guess[a * size + b] == false) {
+                        guess[a * size + b] = -1;
+                    } else {
+                        if (guess[a * size + b] == -1) guess[a * size + b] = false;
+                    }
+                }
                 disp();
+                
             }
             
             function disp() {
@@ -124,7 +139,7 @@
                         blab += "<td>";
                         blab += "<button type='button' onclick='act("+ i +","+ j +")'>";
                         blab += "<strong>";
-                        blab += guess[i * size + j] ? board[i * size + j] ? "B" : help[i * size + j] : "$";
+                        blab += (guess[i *size + j] == - 1) ? "!" : guess[i * size + j] ? board[i * size + j] ? fail() : help[i * size + j] : "$";
                         blab += "</strong>";
                         blab += "</button>";
                         blab += "</td>";
@@ -133,13 +148,38 @@
                     blab += "</tr>";
                 }
                 blab += "</table>";
-                if (count == nmbbomb) blab += "Vous avez Gagn&eacute";
-                
+                if (count == nmbbomb && ! failure) blab += "Vous avez Gagn&eacute";
+                if (failure)  blab += "Vous avez Perdu !";
                 document.getElementById('content').innerHTML = blab;
            }
-            
-            
-            
+           
+           function fail() {
+                failure = true;
+                return "B";
+           }
+            function customStart() {
+                var fo = "";
+                fo +=  '<button type="button" onclick="init(3, 2)"> Start 1/4 </button>';
+                fo +=  '<br/>';
+                fo +=  '<button type="button" onclick="init(10, 10)"> Start Eez </button>';
+                fo +=  '<br/>';
+                fo +=  '<button type="button" onclick="init(30, 15)"> Start Medium </button>';
+                fo +=  '<br/>';
+                fo +=  '<button type="button" onclick="init(70, 25)"> Start PGM </button>';
+                fo +=  '<br/>';
+                fo +=  '<button type="button" onclick="init(399, 20)"> Start Suicide </button>';
+                
+                document.getElementById('form').innerHTML = fo;
+                
+            }
+            function init(bomb, siz) {
+
+                
+                size = siz;
+                nmbbomb = bomb;
+                document.getElementById('form').innerHTML = "";
+                fun();
+            }
             
             </script>
 
@@ -147,7 +187,18 @@
     <button type="button" onclick="fun()">
         Reset.
     </button>
+    <button type="button" onclick="customStart()">
+        Start Custom.
+    </button>
+        <p id ="form">
+       
+       </p>
         <p id="content">
         </p>
+    <input type="radio" name='g1' onclick="cool(1)">
+    </input>
+    <input type="radio"  name='g1' onclick="cool(2)">
+    </input>  
+        
     </body>
 </html>
