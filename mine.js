@@ -133,7 +133,7 @@ function disp() {
             blab += "<td>";
             blab += "<button type='button' onclick='act("+ i +","+ j +")'>";
             blab += "<strong>";
-            blab += (guess[i *size + j] == - 1) ? "!" : guess[i * size + j] ? board[i * size + j] ? fail() : help[i * size + j] : "$";
+            blab += (guess[i *size + j] == - 1) ? "!" : guess[i * size + j] ? board[i * size + j] ? fail() : "<div id ='n" + help[i * size + j] +"'>"+ help[i * size + j] +"</div>" : "$";
             blab += "</strong>";
             blab += "</button>";
             blab += "</td>";
