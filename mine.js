@@ -1,4 +1,3 @@
-
 mode = 1;
 size = 10;
 nmbbomb = 10;
@@ -13,12 +12,23 @@ function rand(a, b) {
     return Math.floor((Math.random() * (b - a + 1)) + a);
 }
 
+/**
+ * Mode used for the click (Left or right)
+ * @param integer i
+ *  The value of the mode between left and right
+ * @since Mine 1.0.0
+ * @version 1.0
+ */
 function cool(i) {
     mode = i;
 }
 
-
-
+/**
+ *
+ * @returns {string}
+ * @since Mine 1.0.0
+ * @version 1.0
+ */
 function fun() {
     failure = false;
     var blab = "";
@@ -74,7 +84,7 @@ function fun() {
         blab += "<tr>";
         for (j = 0; j < size; j ++) {
             blab += "<td>";
-            blab += "<button type='button' onclick='act("+ i +","+ j +")'>";
+            blab += "<button class='btn-bomb' type='button' onclick='act("+ i +","+ j +")'>";
             blab += "<strong>";
             blab += "$";
             blab += "</strong>";
@@ -120,6 +130,11 @@ function act(a,b) {
     
 }
 
+/**
+ * Function used for display game.
+ * @since Mine 1.0
+ * @version 1.0
+ */
 function disp() {
     count = 0;
     count2 = nmbbomb;
@@ -131,13 +146,10 @@ function disp() {
             if (guess[i * size + j] !== true) count ++;
             if (guess[i * size + j] == -1) count2 --;
             blab += "<td>";
-            blab += "<button type='button' onclick='act("+ i +","+ j +")'>";
-            blab += "<strong>";
-            blab += (guess[i *size + j] == - 1) ? "!" : guess[i * size + j] ? board[i * size + j] ? fail() : "<div id ='n" + help[i * size + j] +"'>"+ help[i * size + j] +"</div>" : "$";
-            blab += "</strong>";
+            blab += "<button class='btn-bomb' type='button' onclick='act("+ i +","+ j +")'>";
+            blab += (guess[i *size + j] == - 1) ? "!" : guess[i * size + j] ? board[i * size + j] ? fail() : "<div class='n" + help[i * size + j] +" bold discover'>"+ help[i * size + j] +"</div>" : "$";
             blab += "</button>";
             blab += "</td>";
-
         }
         blab += "</tr>";
     }
@@ -148,6 +160,13 @@ function disp() {
     document.getElementById('content').innerHTML = blab;
 }
 
+/**
+ * End of game.
+ * @returns {string}
+ *  Return the character which represent a Bomb.
+ * @since Mine 1.0
+ * @version 1.0
+ */
 function fail() {
     failure = true;
     return "B";
@@ -174,6 +193,38 @@ function init(bomb, siz) {
     nmbbomb = bomb;
     document.getElementById('form').innerHTML = "";
     fun();
+    generate_minefield_js(bomb, siz);
+}
+
+
+/**
+ * Create and add all node to the minefield.
+ * @param bomb integer
+ *  Number of bomb in minefield
+ * @param size integer
+ *  Size of minefield
+ * @since Mine 1.0
+ * @version 1.0
+ */
+function generate_minefield_js(bomb, size) {
+    // Research table.
+    var minefield = document.getElementById('minefield');
+
+    // Loop for generate all tr on table.
+    var tr = '';
+    var td = '';
+    var text = '';
+    for (var tr_index = 0; tr_index < size; tr_index++) {
+        tr = document.createElement('tr');
+        minefield.appendChild(tr);
+        // Loop for generate all buttons on td and td on tr.
+        for (var td_index = 0; td_index < size; td_index++) {
+            td = document.createElement('td');
+            text = document.createTextNode('$');
+            td.appendChild(text);
+            tr.appendChild(td);
+        }
+    }
 }
 
 
