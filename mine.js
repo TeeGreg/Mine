@@ -197,6 +197,7 @@ function init(bomb, siz) {
 
 /**
  * Create and add all node to the minefield.
+ *
  * @param bomb integer
  *  Number of bomb in minefield
  * @param size integer
@@ -218,6 +219,7 @@ function generate_minefield_js(bomb, size) {
         // Loop for generate all buttons on td and td on tr.
         for (var td_index = 0; td_index < size; td_index++) {
             td = document.createElement('td');
+            td.setAttribute('class', 'td-size');
             text = document.createTextNode('$');
             td.appendChild(text);
             tr.appendChild(td);
@@ -226,3 +228,48 @@ function generate_minefield_js(bomb, size) {
 }
 
 
+/**
+ * Create difficulty nav.
+ *
+ * @param bomb integer
+ *  Number of bomb in minefield
+ * @param size integer
+ *  Size of minefield
+ * @since Mine 1.0
+ * @version 1.0
+ */
+function custom_start_js() {
+    // Array used for generate button options and content.
+    var button_text =  new Array(
+        "Start 1/4",
+        "Start Eez",
+        "Start Medium",
+        "Start PGM",
+        "Start Suicide"
+    );
+    var onclick_opts = new Array(
+        "init(3, 2)",
+        "init(10, 10)",
+        "init(30, 15)",
+        "init(70, 25)",
+        "init(399, 20)"
+    );
+
+    // Creation variable using in loop.
+    var ul = document.getElementById('difficulty-list');
+    var li = '';
+    var button = '';
+    var text = '';
+
+    // Loop for generate li and content.
+    for (var index = 0; index < button_text.length; index++) {
+        button = document.createElement('button');
+        button.setAttribute('class', 'btn btn-primary');
+        button.setAttribute('onclick', onclick_opts[index]);
+        text = document.createTextNode(button_text[index]);
+        button.appendChild(text);
+        li = document.createElement('li');
+        li.appendChild(button);
+        ul.appendChild(li);
+    }
+}

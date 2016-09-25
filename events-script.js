@@ -25,11 +25,15 @@
  * @version 1.0
  */
 $(window).on('load', function() {
+    // Regex used for block click when case is already clicked or discovered.
+    var regex_left_click = /[0-8]|B|X/i;
+    var regex_right_click = /[0-8]|B/i;
+
     $('#minefield').on({
         // Mouse is over a <td> element.
         mouseenter : function() {
             $(this).css({
-                'background': 'blue',
+                'background': 'silver',
             });
         },
         // Mouse leave <td> element.
@@ -40,15 +44,23 @@ $(window).on('load', function() {
         },
         // Left click action.
         click : function() {
-            $(this).text('B');
+            if (!$(this).text().match(regex_left_click)) {
+                $(this).text('B');
+            }
         },
         // Right click action.
         contextmenu : function() {
-            $(this).text('X');
+            if (!$(this).text().match(regex_right_click)) {
+                // if symbol not equals 'X', so flag case, else remove flag,
+                if($(this).text() != "X") {
+                    $(this).text('X');
+                } else {
+                    $(this).text('$');
+                }
+            }
         },
     }, "tr td"); // #minefield on
 }); // window on
-
 
 /**
  * Disabled context menu when right click on mouse.
@@ -60,5 +72,5 @@ $(document).ready(function() {
     $(document).on('contextmenu', 'html', function(e) {
         e.preventDefault();
         return false;
-    });
-});
+    }); // document on
+}); // document ready

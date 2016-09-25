@@ -1,8 +1,10 @@
-table  {
+html {
+    margin: 10px;
+}
 
+table  {
 border: 2px solid silver;
 border-collapse: collapse;
-
 }
 
 td  {
@@ -21,6 +23,21 @@ height: 20px;
 text-align: center;
 }
 
+/* Size of the minefield case */
+.td-size {
+    width: 25px;
+    height: 25px
+}
+
+/* Margin used for separate element of difficulty menu */
+#difficulty-nav {
+    margin: 15px 0px;
+}
+
+/* Margin of list of difficulty */
+#difficulty-list {
+    margin-bottom: 15px;
+}
 
 .n0 {
 color: silver;

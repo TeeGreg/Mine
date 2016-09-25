@@ -1,0 +1,236 @@
+[1mdiff --git a/events-script.js b/events-script.js[m
+[1mindex 0766b00..4f15ba1 100644[m
+[1m--- a/events-script.js[m
+[1m+++ b/events-script.js[m
+[36m@@ -25,11 +25,15 @@[m
+  * @version 1.0[m
+  */[m
+ $(window).on('load', function() {[m
+[32m+[m[32m    // Regex used for block click when case is already clicked or discovered.[m
+[32m+[m[32m    var regex_left_click = /[0-8]|B|X/i;[m
+[32m+[m[32m    var regex_right_click = /[0-8]|B/i;[m
+[32m+[m
+     $('#minefield').on({[m
+         // Mouse is over a <td> element.[m
+         mouseenter : function() {[m
+             $(this).css({[m
+[31m-                'background': 'blue',[m
+[32m+[m[32m                'background': 'silver',[m
+             });[m
+         },[m
+         // Mouse leave <td> element.[m
+[36m@@ -40,16 +44,24 @@[m [m$(window).on('load', function() {[m
+         },[m
+         // Left click action.[m
+         click : function() {[m
+[31m-            $(this).text('B');[m
+[32m+[m[32m            if (!$(this).text().match(regex_left_click)) {[m
+[32m+[m[32m                $(this).text('B');[m
+[32m+[m[32m            }[m
+         },[m
+         // Right click action.[m
+         contextmenu : function() {[m
+[31m-            $(this).text('X');[m
+[32m+[m[32m            if (!$(this).text().match(regex_right_click)) {[m
+[32m+[m[32m                // if symbol not equals 'X', so flag case, else remove flag,[m
+[32m+[m[32m                if($(this).text() != "X") {[m
+[32m+[m[32m                    $(this).text('X');[m
+[32m+[m[32m                } else {[m
+[32m+[m[32m                    $(this).text('$');[m
+[32m+[m[32m                }[m
+[32m+[m[32m            }[m
+         },[m
+     }, "tr td"); // #minefield on[m
+ }); // window on[m
+ [m
+[31m-[m
+ /**[m
+  * Disabled context menu when right click on mouse.[m
+  *[m
+[36m@@ -60,5 +72,5 @@[m [m$(document).ready(function() {[m
+     $(document).on('contextmenu', 'html', function(e) {[m
+         e.preventDefault();[m
+         return false;[m
+[31m-    });[m
+[31m-});[m
+\ No newline at end of file[m
+[32m+[m[32m    }); // document on[m
+[32m+[m[32m}); // document ready[m
+\ No newline at end of file[m
+[1mdiff --git a/feuille.css b/feuille.css[m
+[1mindex b912b88..d96753d 100644[m
+[1m--- a/feuille.css[m
+[1m+++ b/feuille.css[m
+[36m@@ -1,8 +1,10 @@[m
+[31m-table  {[m
+[32m+[m[32mhtml {[m
+[32m+[m[32m    margin: 10px;[m
+[32m+[m[32m}[m
+ [m
+[32m+[m[32mtable  {[m
+ border: 2px solid silver;[m
+ border-collapse: collapse;[m
+[31m-[m
+ }[m
+ [m
+ td  {[m
+[36m@@ -21,6 +23,21 @@[m [mheight: 20px;[m
+ text-align: center;[m
+ }[m
+ [m
+[32m+[m[32m/* Size of the minefield case */[m
+[32m+[m[32m.td-size {[m
+[32m+[m[32m    width: 25px;[m
+[32m+[m[32m    height: 25px[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m/* Margin used for separate element of difficulty menu */[m
+[32m+[m[32m#difficulty-nav {[m
+[32m+[m[32m    margin: 15px 0px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m/* Margin of list of difficulty */[m
+[32m+[m[32m#difficulty-list {[m
+[32m+[m[32m    margin-bottom: 15px;[m
+[32m+[m[32m}[m
+ [m
+ .n0 {[m
+ color: silver;[m
+[1mdiff --git a/mine.html b/mine.html[m
+[1mindex 13239ce..e97085a 100644[m
+[1m--- a/mine.html[m
+[1m+++ b/mine.html[m
+[36m@@ -3,14 +3,12 @@[m
+     <head>[m
+         <meta charset="utf-8" />[m
+         <title>Mine</title>[m
+[32m+[m[32m        <!-- Remove line under this comment for erase bootstrap cdn link -->[m
+[32m+[m[32m        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />[m
+         <link rel="stylesheet" href="feuille.css" />[m
+     </head>[m
+ [m
+     <body>[m
+[31m-    <!-- Used google CDN for import jquery libs -->[m
+[31m-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>[m
+[31m-    <script src="mine.js"></script>[m
+[31m-    <script src="events-script.js"></script>[m
+ [m
+     <!-- Menu of the game -->[m
+     <button type="button" onclick="fun()">[m
+[36m@@ -23,20 +21,38 @@[m
+     <!-- -->[m
+     <p id ="form"><p>[m
+ [m
+[31m-        <!-- -->[m
+[32m+[m[32m    <!-- -->[m
+     <p id="content"></p>[m
+ [m
+     <!-- Radio button for right or left click -->[m
+     <label for="left">Left click </label> <input type="radio" id="left" name='g1' onclick="cool(1)">[m
+     <label for="right">Right click</label> <input type="radio" id="right" name='g1' onclick="cool(2)">[m
+ [m
+[31m-[m
+[31m-    <!-- Minefield for testing JQuery function. -->[m
+[31m-    <div id="minefield-frame">[m
+[31m-        <table id="minefield">[m
+[31m-[m
+[31m-        </table>[m
+[31m-    </div>[m
+[31m-[m
+[32m+[m[32m        <!-- Kero test Section, removed if you like ^^ -->[m
+[32m+[m[32m        <!-- Main nav of the game Mine : select start game or reset game -->[m
+[32m+[m[32m        <div class="game-nav">[m
+[32m+[m[32m            <button class="btn btn-warning" type="button" onclick="fun()"> Reset. </button>[m
+[32m+[m[32m            <button class="btn btn-primary" type="button" onclick="custom_start_js()">Start Game[m
+[32m+[m[32m            <!-- Difficulty nav auto fill by Javascript -->[m
+[32m+[m[32m            <div id="difficulty-nav">[m
+[32m+[m[32m                <ul id="difficulty-list" class="list-unstyled list-inline">[m
+[32m+[m
+[32m+[m[32m                </ul>[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m        </div>[m
+[32m+[m
+[32m+[m[32m        <!-- Minefield for testing JQuery function. -->[m
+[32m+[m[32m        <div id="minefield-frame">[m
+[32m+[m[32m            <table id="minefield">[m
+[32m+[m
+[32m+[m[32m            </table>[m
+[32m+[m[32m        </div>[m
+[32m+[m
+[32m+[m[32m        <!-- Used google CDN for import jquery lib -->[m
+[32m+[m[32m        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>[m
+[32m+[m[32m        <!-- Comment the line under this comment for erase bootstrap class and retrieve good css -->[m
+[32m+[m[32m        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>[m
+[32m+[m[32m        <script src="mine.js"></script>[m
+[32m+[m[32m        <script src="events-script.js"></script>[m
+     </body>[m
+ </html>[m
+[1mdiff --git a/mine.js b/mine.js[m
+[1mindex 4af86b6..dc6bf09 100644[m
+[1m--- a/mine.js[m
+[1m+++ b/mine.js[m
+[36m@@ -197,6 +197,7 @@[m [mfunction init(bomb, siz) {[m
+ [m
+ /**[m
+  * Create and add all node to the minefield.[m
+[32m+[m[32m *[m[41m[m
+  * @param bomb integer[m
+  *  Number of bomb in minefield[m
+  * @param size integer[m
+[36m@@ -218,6 +219,7 @@[m [mfunction generate_minefield_js(bomb, size) {[m
+         // Loop for generate all buttons on td and td on tr.[m
+         for (var td_index = 0; td_index < size; td_index++) {[m
+             td = document.createElement('td');[m
+[32m+[m[32m            td.setAttribute('class', 'td-size');[m[41m[m
+             text = document.createTextNode('$');[m
+             td.appendChild(text);[m
+             tr.appendChild(td);[m
+[36m@@ -226,3 +228,48 @@[m [mfunction generate_minefield_js(bomb, size) {[m
+ }[m
+ [m
+ [m
+[32m+[m[32m/**[m[41m[m
+[32m+[m[32m * Create difficulty nav.[m[41m[m
+[32m+[m[32m *[m[41m[m
+[32m+[m[32m * @param bomb integer[m[41m[m
+[32m+[m[32m *  Number of bomb in minefield[m[41m[m
+[32m+[m[32m * @param size integer[m[41m[m
+[32m+[m[32m *  Size of minefield[m[41m[m
+[32m+[m[32m * @since Mine 1.0[m[41m[m
+[32m+[m[32m * @version 1.0[m[41m[m
+[32m+[m[32m */[m[41m[m
+[32m+[m[32mfunction custom_start_js() {[m[41m[m
+[32m+[m[32m    // Array used for generate button options and content.[m[41m[m
+[32m+[m[32m    var button_text =  new Array([m[41m[m
+[32m+[m[32m        "Start 1/4",[m[41m[m
+[32m+[m[32m        "Start Eez",[m[41m[m
+[32m+[m[32m        "Start Medium",[m[41m[m
+[32m+[m[32m        "Start PGM",[m[41m[m
+[32m+[m[32m        "Start Suicide"[m[41m[m
+[32m+[m[32m    );[m[41m[m
+[32m+[m[32m    var onclick_opts = new Array([m[41m[m
+[32m+[m[32m        "init(3, 2)",[m[41m[m
+[32m+[m[32m        "init(10, 10)",[m[41m[m
+[32m+[m[32m        "init(30, 15)",[m[41m[m
+[32m+[m[32m        "init(70, 25)",[m[41m[m
+[32m+[m[32m        "init(399, 20)"[m[41m[m
+[32m+[m[32m    );[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    // Creation variable using in loop.[m[41m[m
+[32m+[m[32m    var ul = document.getElementById('difficulty-list');[m[41m[m
+[32m+[m[32m    var li = '';[m[41m[m
+[32m+[m[32m    var button = '';[m[41m[m
+[32m+[m[32m    var text = '';[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    // Loop for generate li.[m[41m[m
+[32m+[m[32m    for (var index = 0; index < button_text.length; index++) {[m[41m[m
+[32m+[m[32m        button = document.createElement('button');[m[41m[m
+[32m+[m[32m        button.setAttribute('class', 'btn btn-primary');[m[41m[m
+[32m+[m[32m        button.setAttribute('onclick', onclick_opts[index]);[m[41m[m
+[32m+[m[32m        text = document.createTextNode(button_text[index]);[m[41m[m
+[32m+[m[32m        button.appendChild(text);[m[41m[m
+[32m+[m[32m        li = document.createElement('li');[m[41m[m
+[32m+[m[32m        li.appendChild(button);[m[41m[m
+[32m+[m[32m        ul.appendChild(li);[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[32m}[m[41m[m
