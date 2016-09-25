@@ -14,6 +14,9 @@
  * so the table element like tr and td not generate before trigger and §JQuery not execute function on it.
  * In conclusion, using function on and delegate event after DOM creation.
  *
+ * /!\ Using function on('load', ...) instead of function .load() because with JQuery 3.X,
+ * a bug appear when you try to used function load.
+ *
  * @TODO
  *  This function is work in progress, so currently,
  *  it change background when the cursor of mouse is hover an cell td of the second table.
@@ -23,17 +26,27 @@
  */
 $(window).on('load', function() {
     $('#minefield').on({
-        mouseenter: function() {
+        // Mouse is over a <td> element.
+        mouseenter : function() {
             $(this).css({
                 'background': 'blue',
             });
         },
-        mouseleave: function() {
+        // Mouse leave <td> element.
+        mouseleave : function() {
             $(this).css({
                 'background': 'none',
             });
-        }
-    }, "tr td");
+        },
+        // Left click action.
+        click : function() {
+            $(this).text('B');
+        },
+        // Right click action.
+        contextmenu : function() {
+            $(this).text('X');
+        },
+    }, "tr td"); // #minefield on
 }); // window on
 
 

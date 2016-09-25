@@ -74,9 +74,7 @@ function fun() {
                 help[(i - 1) * size +  (j - 1)] ++;
              }
          }
-
     }
-
 
     blab += "<table>";
 
