@@ -1,0 +1,19 @@
+A faire :
+Un plateau, qui est un objet qui posede 3 (4) tableau, qui respectivement vont contenir :
+-Les mines (bool)
+-Les aides, nombre de cases adjacente contenant une mine (nb[0.8])
+-Le cases découvertent, qui contiennent l'information, qui sera affichée à l'écran
+-(opt) Les spéculation, nombre de mine theoriques alentoures, selon le placement actuelle des sugestion
+ 
+ Le plateau sera en mesure de s'initialiser, prenant en argument les tailles des lignes et colonnes ( nb < 0 ), ainsi que le nb de bombes (1 < nb < col*row - 1)
+ 
+ Le plateau connais le nombre de spéculation effectuées, et peut le retourner
+ Le plateau peut aussi retour le tableau guess, en vu de l'affichage.
+ 
+ Le plateau est capable de simuler un coup ou une sugestion
+ 
+ Note, les tache d'initialisation et de modification doivent etre gerer par un controler externe, auquel le plateur doit donner acces et droit de modification à toutes ces données
+ 
+ Enfin, une partie affichage et recyuperation des interactions utilateur doit etre creee, elle comprends un chrono, et compteur de mine restant 
+ 
+ De plus, une gestion des meilleurs temps pourra etre proposée
