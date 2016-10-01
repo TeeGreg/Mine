@@ -9,50 +9,26 @@
     </head>
 
     <body>
+        <div class="mine-nav">
+            <button id="mine-start-game" class="btn btn-primary">Start Game</button>
+            <button id="mine-reset-game" class="btn btn-danger" >Reset Game</button>
 
-    <!-- Menu of the game -->
-    <button type="button" onclick="fun()">
-        Reset.
-    </button>
-    <button type="button" onclick="customStart()">
-        Start Custom.
-    </button>
+            <div id="mine-nav-difficulty">
 
-    <!-- -->
-    <p id ="form"><p>
-
-    <!-- -->
-    <p id="content"></p>
-
-    <!-- Radio button for right or left click -->
-    <label for="left">Left click </label> <input type="radio" id="left" name='g1' onclick="cool(1)">
-    <label for="right">Right click</label> <input type="radio" id="right" name='g1' onclick="cool(2)">
-
-        <!-- Kero test Section, removed if you like ^^ -->
-        <!-- Main nav of the game Mine : select start game or reset game -->
-        <div class="game-nav">
-            <button class="btn btn-warning" type="button" onclick="fun()"> Reset. </button>
-            <button class="btn btn-primary" type="button" onclick="custom_start_js()">Start Game
-            <!-- Difficulty nav auto fill by Javascript -->
-            <div id="difficulty-nav">
-                <ul id="difficulty-list" class="list-unstyled list-inline">
-
-                </ul>
             </div>
+
         </div>
 
-        <!-- Minefield for testing JQuery function. -->
-        <div id="minefield-frame">
-            <table id="minefield">
+        <canvas id="mine-minefield-canvas">
+            <table id="mine-minefield-table">
 
             </table>
-        </div>
+        </canvas>
 
-        <!-- Used google CDN for import jquery lib -->
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <!-- Comment the line under this comment for erase bootstrap class and retrieve good css -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="mine.js"></script>
+        <script src="minefield.js"></script>
         <script src="events-script.js"></script>
     </body>
 </html>

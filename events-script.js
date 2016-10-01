@@ -17,19 +17,16 @@
  * /!\ Using function on('load', ...) instead of function .load() because with JQuery 3.X,
  * a bug appear when you try to used function load.
  *
- * @TODO
- *  This function is work in progress, so currently,
- *  it change background when the cursor of mouse is hover an cell td of the second table.
- *
  * @since Mine 1.0
  * @version 1.0
  */
+var minefield;
 $(window).on('load', function() {
     // Regex used for block click when case is already clicked or discovered.
     var regex_left_click = /[0-8]|B|X/i;
     var regex_right_click = /[0-8]|B/i;
 
-    $('#minefield').on({
+    $('#mine-minefield-table').on({
         // Mouse is over a <td> element.
         mouseenter : function() {
             $(this).css({
@@ -59,8 +56,15 @@ $(window).on('load', function() {
                 }
             }
         },
-    }, "tr td"); // #minefield on
+    }, "tr td"); // #mine-minefield-table on
+
+    $('#mine-start-game').click(function() {
+        minefield = new Minefield(10, 10, 10);
+    });
+
+
 }); // window on
+
 
 /**
  * Disabled context menu when right click on mouse.
