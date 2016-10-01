@@ -10,13 +10,17 @@
 
     <body>
         <div class="mine-nav">
-            <button id="mine-start-game" class="btn btn-primary">Start Game</button>
-            <button id="mine-reset-game" class="btn btn-danger" >Reset Game</button>
+            <button role="button" id="mine-start-game" class="btn btn-primary">Start Game</button>
+            <button role="button" id="mine-reset-game" class="btn btn-danger" >Reset Game</button>
 
-            <div id="mine-nav-difficulty">
-
-            </div>
-
+            <nav id="mine-nav-difficulty" class="navbar navbar-light bg-faded">
+                <ul id="mine-subnav-difficulty" class="nev navbar-nav list-inline">
+                    <li class="nav-item"><button type="button" id="mine-easy-difficulty"    class="btn btn-success">Easy</button></li>
+                    <li class="nav-item"><button type="button" id="mine-medium-difficulty"  class="btn btn-info">Medium</button></li>
+                    <li class="nav-item"><button type="button" id="mine-hard-difficulty"    class="btn btn-warning">Hard</button></li>
+                    <li class="nav-item"><button type="button" id="mine-suicide-difficulty" class="btn btn-danger">Suicide</button></li>
+                </ul>
+            </nav>
         </div>
 
         <canvas id="mine-minefield-canvas">

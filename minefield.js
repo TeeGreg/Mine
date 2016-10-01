@@ -38,11 +38,6 @@ function Minefield(row, col, mine_number) {
             this.mine[line][column]  = false;
             this.help[line][column]  = 0;
             this.guess[line][column] = false;
-
-            console.log('= ROW ' + line + ' = COL = ' + column + ' =');
-            console.log('Mine ' + this.mine[line][column]);
-            console.log('Help ' + this.help[line][column]);
-            console.log('Guess ' + this.guess[line][column]);
         }
     }
 
@@ -55,17 +50,18 @@ function Minefield(row, col, mine_number) {
         // If the case not contains mine, so added it on case and added counting help case.
         if (this.mine[rdm_row][rdm_col] == false) {
             this.mine[rdm_row][rdm_col] = true;
-            console.log("col : " + rdm_col + " row : " + rdm_row);
-
             placed_mine++;
-            if (this.testCoordinate(rdm_row, rdm_col)) { this.help[rdm_row + 1][rdm_col    ]++; }
-            if (this.testCoordinate(rdm_row, rdm_col)) { this.help[rdm_row + 1][rdm_col + 1]++; }
-            if (this.testCoordinate(rdm_row, rdm_col)) { this.help[rdm_row + 1][rdm_col - 1]++; }
-            if (this.testCoordinate(rdm_row, rdm_col)) { this.help[rdm_row    ][rdm_col + 1]++; }
-            if (this.testCoordinate(rdm_row, rdm_col)) { this.help[rdm_row    ][rdm_col - 1]++; }
-            if (this.testCoordinate(rdm_row, rdm_col)) { this.help[rdm_row - 1][rdm_col    ]++; }
-            if (this.testCoordinate(rdm_row, rdm_col)) { this.help[rdm_row - 1][rdm_col + 1]++; }
-            if (this.testCoordinate(rdm_row, rdm_col)) { this.help[rdm_row - 1][rdm_col - 1]++; }
+
+            console.log('Row : ' + rdm_row + ' - - - Col : ' + rdm_col);
+
+            if (this.testCoordinate(rdm_row + 1, rdm_col    )) { this.help[rdm_row + 1][rdm_col    ] += 1; }
+            if (this.testCoordinate(rdm_row + 1, rdm_col + 1)) { this.help[rdm_row + 1][rdm_col + 1] += 1; }
+            if (this.testCoordinate(rdm_row + 1, rdm_col - 1)) { this.help[rdm_row + 1][rdm_col - 1] += 1; }
+            if (this.testCoordinate(rdm_row    , rdm_col + 1)) { this.help[rdm_row    ][rdm_col + 1] += 1; }
+            if (this.testCoordinate(rdm_row    , rdm_col - 1)) { this.help[rdm_row    ][rdm_col - 1] += 1; }
+            if (this.testCoordinate(rdm_row - 1, rdm_col    )) { this.help[rdm_row - 1][rdm_col    ] += 1; }
+            if (this.testCoordinate(rdm_row - 1, rdm_col + 1)) { this.help[rdm_row - 1][rdm_col + 1] += 1; }
+            if (this.testCoordinate(rdm_row - 1, rdm_col - 1)) { this.help[rdm_row - 1][rdm_col - 1] += 1; }
         }
     }
 }
@@ -161,8 +157,32 @@ Minefield.prototype.displayCase = function(row, col) {
  * @since Mine 2.0
  * @version 0.1
  */
-Minefield.prototype.getGuess = function(row, col) {
+Minefield.prototype.getCase = function(row, col) {
     return this.guess[row][col];
+}
+
+/**
+ * This function return the number of lines who composed Minefield.
+ *
+ * @return
+ *  Return the number of line in the minefield.
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.getRowCount = function() {
+    return this.guess.length;
+}
+
+/**
+ * This function return the number of column who composed Minefield.
+ *
+ * @return
+ *  Return the number of column in the minefield.
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.getColoumnCount = function() {
+    return this.guess[0].length;
 }
 
 /**
@@ -174,9 +194,11 @@ Minefield.prototype.getGuess = function(row, col) {
  *  The current col used.
  * @return boolean
  *  The statement of the boolean expression.
+ * @since Mine 2.0
+ * @version 0.1
  */
 Minefield.prototype.testCoordinate = function(row, col)  {
-    return row >= 0 && row < this.guess.length && col >= 0 && col < this.guess[0].length;
+    return 0 <= row && row < this.getRowCount() && 0 <= col && col < this.getColoumnCount();
 }
 
 /**
@@ -188,6 +210,8 @@ Minefield.prototype.testCoordinate = function(row, col)  {
  *  The maximum value of random.
  * @return {number}
  *  A random generated number between min and max value.
+ * @since Mine 2.0
+ * @version 0.1
  */
 Minefield.prototype.rand = function(min, max) {
     return Math.floor((Math.random() * (max - min + 1)) + min);

@@ -23,21 +23,13 @@ height: 20px;
 text-align: center;
 }
 
-/* Size of the minefield case */
-.td-size {
-    width: 25px;
-    height: 25px
+#mine-nav-difficulty {
+    margin-top: 10px;
+    display: none;
 }
 
-/* Margin used for separate element of difficulty menu */
-#difficulty-nav {
-    margin: 15px 0px;
-}
 
-/* Margin of list of difficulty */
-#difficulty-list {
-    margin-bottom: 15px;
-}
+
 
 .n0 {
 color: silver;
