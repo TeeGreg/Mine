@@ -2,9 +2,29 @@
  * This file contains all eveents present in game.
  *
  * @author Kero76
- * @since Mine 1.0
+ * @since Mine 2.0
  * @version 1.0
  */
+
+
+/**
+ * Representation of an instance of Minefield class.
+ *
+ * @var Minefield
+ * @since Mine 2.0
+ * @version 1.0
+ */
+var minefield;
+
+/**
+ * Representation of an instance of MinefieldView class.
+ *
+ * @var MinefieldView
+ * @since Mine 2.0
+ * @version 1.0
+ */
+var minefieldView;
+
 
 /**
  * Generate events when mouse is enter or leave cells of the minefield.
@@ -20,7 +40,6 @@
  * @since Mine 2.0
  * @version 1.0
  */
-var minefield;
 $(window).on('load', function() {
     // Regex used for block click when case is already clicked or discovered.
     var regex_left_click = /[0-8]|B|X/i;
@@ -42,7 +61,15 @@ $(window).on('load', function() {
         // Left click action.
         click : function() {
             if (!$(this).text().match(regex_left_click)) {
-                $(this).text('B');
+                var split = $(this).attr('id').split('-');
+                var row = split[0].substring(1);
+                var col = split[1].substring(1);
+
+                // Reveal 0 case around case play.
+                minefieldView.getMinefield().displayCase(row, col);
+                minefieldView.updateView(row, col);
+
+                //$(this).text('B');
             }
         },
         // Right click action.
@@ -77,9 +104,13 @@ $(window).on('load', function() {
      * @since Mine 2.0
      * @version 1.0
      */
-    var minefield;
     $('#mine-easy-difficulty').click(function() {
-        minefield = new Minefield(10, 10, 10);
+
+        // Create Minefield and MinefieldView.
+        minefield     = new Minefield(10, 10, 10);
+        minefieldView = new MinefieldView(minefield);
+
+
         console.log('Easy Minefield generated');
         undisplay_difficulty_nav();
     }); // #mine-easy-difficulty click
@@ -91,7 +122,12 @@ $(window).on('load', function() {
      * @version 1.0
      */
     $('#mine-medium-difficulty').click(function() {
-        minefield = new Minefield(15, 15, 30);
+
+        // Create Minefield and MinefieldView.
+        minefield     = new Minefield(15, 15, 30);
+        minefieldView = new MinefieldView(minefield);
+
+
         console.log('Medium Minefield generated');
         undisplay_difficulty_nav();
     }); // #mine-meduim-difficulty click
@@ -103,7 +139,12 @@ $(window).on('load', function() {
      * @version 1.0
      */
     $('#mine-hard-difficulty').click(function() {
-        minefield = new Minefield(25, 25, 70);
+
+        // Create Minefield and MinefieldView.
+        minefield     = new Minefield(25, 25, 70);
+        minefieldView = new MinefieldView(minefield);
+
+
         console.log('Hard Minefield generated');
         undisplay_difficulty_nav();
     }); // #mine-hard-difficulty click
@@ -115,7 +156,12 @@ $(window).on('load', function() {
      * @version 1.0
      */
     $('#mine-suicide-difficulty').click(function() {
-        minefield = new Minefield(20, 20, 399);
+
+        // Create Minefield and MinefieldView.
+        minefield     = new Minefield(20, 20, 399);
+        minefieldView = new MinefieldView(minefield);
+
+
         console.log('Suicide Minefield generated');
         undisplay_difficulty_nav();
     }); // #mine-suicide-difficulty click
@@ -145,7 +191,7 @@ $(document).ready(function() {
      *
      * When the player click on the reset button, the game was reset at 0.
      * In fact, it undisplay difficulty choice is visible and available the button start game.
-     * So, it reset the variable minefield at null, for destroy last instance of the object Minefield.
+     * So, it removed too <tr> element of Minefield because the player reset party.
      *
      * @since Mine 2.0
      * @version 1.0
@@ -153,12 +199,13 @@ $(document).ready(function() {
     $('#mine-reset-game').click(function() {
         undisplay_difficulty_nav();
         $('#mine-start-game').prop('disabled', false);
-        minefield = null;
+        $('#mine-minefield-table tr').remove();
+        $('#mine-result-game').text('');
     }); // #mine-reset-game click
 }); // document ready
 
 /**
- * Utilitary function use for undisplay difficulty menu.
+ * Uility function use for undisplay difficulty menu.
  *
  * @since Mine 2.0
  * @version 1.0

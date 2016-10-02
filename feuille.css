@@ -23,12 +23,20 @@ height: 20px;
 text-align: center;
 }
 
+/**
+ * Difficulty nav display after Start Game button click.
+ */
 #mine-nav-difficulty {
     margin-top: 10px;
     display: none;
 }
 
-
+/**
+ * Minefield element for played.
+ */
+#mine-minefield-canvas {
+    margin-top: 10px;
+}
 
 
 .n0 {

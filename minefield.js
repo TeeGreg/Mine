@@ -51,9 +51,6 @@ function Minefield(row, col, mine_number) {
         if (this.mine[rdm_row][rdm_col] == false) {
             this.mine[rdm_row][rdm_col] = true;
             placed_mine++;
-
-            console.log('Row : ' + rdm_row + ' - - - Col : ' + rdm_col);
-
             if (this.testCoordinate(rdm_row + 1, rdm_col    )) { this.help[rdm_row + 1][rdm_col    ] += 1; }
             if (this.testCoordinate(rdm_row + 1, rdm_col + 1)) { this.help[rdm_row + 1][rdm_col + 1] += 1; }
             if (this.testCoordinate(rdm_row + 1, rdm_col - 1)) { this.help[rdm_row + 1][rdm_col - 1] += 1; }
@@ -64,7 +61,7 @@ function Minefield(row, col, mine_number) {
             if (this.testCoordinate(rdm_row - 1, rdm_col - 1)) { this.help[rdm_row - 1][rdm_col - 1] += 1; }
         }
     }
-}
+};
 
 /**
  * Function use for update Guess array after player action in minefield.
@@ -82,22 +79,22 @@ function Minefield(row, col, mine_number) {
  */
 Minefield.prototype.updateGuess = function(row, col) {
     // If click case not click before, mark it like clicked.
-    if (!this.guess[row][col]) {
+    if (this.guess[row][col] == false) {
         this.guess[row][col] = true;
 
-        // If help array contains 0, then develop increment value around initial case.
-        if ( this.help[row][col] == 0) {
-            if (testforcoord(row + 1, col    )) { this.updateGuess(row + 1, col    ); }
-            if (testforcoord(row - 1, col    )) { this.updateGuess(row - 1, col    ); }
-            if (testforcoord(row + 1, col + 1)) { this.updateGuess(row + 1, col + 1); }
-            if (testforcoord(row + 1, col - 1)) { this.updateGuess(row + 1, col - 1); }
-            if (testforcoord(row - 1, col + 1)) { this.updateGuess(row - 1, col + 1); }
-            if (testforcoord(row - 1, col - 1)) { this.updateGuess(row - 1, col - 1); }
-            if (testforcoord(row,     col + 1)) { this.updateGuess(row,     col + 1); }
-            if (testforcoord(row,     col - 1)) { this.updateGuess(row,     col - 1); }
+        // If help array contains 0, then it reveal other case all around the 0 case.
+        if (this.help[row][col] == 0) {
+            if (this.testCoordinate(row + 1, col    )) { this.updateGuess(row + 1, col    ); }
+            if (this.testCoordinate(row + 1, col + 1)) { this.updateGuess(row + 1, col + 1); }
+            if (this.testCoordinate(row + 1, col - 1)) { this.updateGuess(row + 1, col - 1); }
+            if (this.testCoordinate(row,     col + 1)) { this.updateGuess(row,     col + 1); }
+            if (this.testCoordinate(row,     col - 1)) { this.updateGuess(row,     col - 1); }
+            if (this.testCoordinate(row - 1, col    )) { this.updateGuess(row - 1, col    ); }
+            if (this.testCoordinate(row - 1, col + 1)) { this.updateGuess(row - 1, col + 1); }
+            if (this.testCoordinate(row - 1, col - 1)) { this.updateGuess(row - 1, col - 1); }
         }
     }
-}
+};
 
 /**
  * Function use for mark Mine position on array.
@@ -125,7 +122,7 @@ Minefield.prototype.markMine = function(row, col) {
             this.guess[row][col] = false;
         }
     }
-}
+};
 
 /**
  * Function callback after player's action.
@@ -143,47 +140,77 @@ Minefield.prototype.markMine = function(row, col) {
  */
 Minefield.prototype.displayCase = function(row, col) {
     this.updateGuess(row, col);
-}
-
-/**
- * This function return the case select by player.
- *
- * @param integer row
- *  The row where the player click.
- * @param integer col
- *  The column where the player click.
- * @return
- *  Return the case selected by player.
- * @since Mine 2.0
- * @version 0.1
- */
-Minefield.prototype.getCase = function(row, col) {
-    return this.guess[row][col];
-}
+};
 
 /**
  * This function return the number of lines who composed Minefield.
  *
- * @return
+ * @return integer
  *  Return the number of line in the minefield.
  * @since Mine 2.0
  * @version 0.1
  */
 Minefield.prototype.getRowCount = function() {
     return this.guess.length;
-}
+};
 
 /**
  * This function return the number of column who composed Minefield.
  *
- * @return
+ * @return integer
  *  Return the number of column in the minefield.
  * @since Mine 2.0
  * @version 0.1
  */
 Minefield.prototype.getColoumnCount = function() {
     return this.guess[0].length;
-}
+};
+
+/**
+ * This function return the specific case on Help array.
+ *
+ * @param integer row
+ *  The current row used.
+ * @param integer col
+ *  The current col used.
+ * @return number
+ *  Return the specific case on Help array.
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.getHelp = function(row, col)  {
+    return this.help[row][col];
+};
+
+/**
+ * This function return the specific case on Guess array.
+ *
+ * @param integer row
+ *  The current row used.
+ * @param integer col
+ *  The current col used.
+ * @return boolean
+ *  Return the specific case on Guess array.
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.getGuess = function(row, col)  {
+    return this.guess[row][col];
+};
+
+/**
+ * Set the specific case on Guess array.
+ *
+ * @param integer row
+ *  The current row used.
+ * @param integer col
+ *  The current col used.
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.setGuess = function(row, col)  {
+    this.guess[row][col] = true;
+};
 
 /**
  * Test if the coordinates are good or false.
@@ -199,7 +226,7 @@ Minefield.prototype.getColoumnCount = function() {
  */
 Minefield.prototype.testCoordinate = function(row, col)  {
     return 0 <= row && row < this.getRowCount() && 0 <= col && col < this.getColoumnCount();
-}
+};
 
 /**
  * Function generated random number.
@@ -208,11 +235,27 @@ Minefield.prototype.testCoordinate = function(row, col)  {
  *  The minimum value of random.
  * @param integer max
  *  The maximum value of random.
- * @return {number}
+ * @return number
  *  A random generated number between min and max value.
  * @since Mine 2.0
  * @version 0.1
  */
 Minefield.prototype.rand = function(min, max) {
     return Math.floor((Math.random() * (max - min + 1)) + min);
-}
+};
+
+/**
+ * Function use for test if the player have click on mine or not.
+ *
+ * @param integer row
+ *  The row of the case at see if the mine is under the case.
+ * @param integer col
+ *  The column of the case at see if the mine is under the case.
+ * @return boolean
+ *  Return the statement of the mine case.
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.fail = function(row, col) {
+    return this.mine[row][col];
+};
