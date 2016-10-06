@@ -42,7 +42,7 @@ var minefieldView;
  */
 $(window).on('load', function() {
     // Regex used for block click when case is already clicked or discovered.
-    var regex_left_click = /[0-8]|B|X/i;
+    var regex_left_click = /[0-8]|B|!/i;
     var regex_right_click = /[0-8]|B/i;
 
     $('#mine-minefield-table').on({
@@ -62,24 +62,27 @@ $(window).on('load', function() {
         click : function() {
             if (!$(this).text().match(regex_left_click)) {
                 var split = $(this).attr('id').split('-');
-                var row = split[0].substring(1);
-                var col = split[1].substring(1);
+                var row = new Number(split[0].substring(1));
+                var col = new Number(split[1].substring(1));
 
                 // Reveal 0 case around case play.
                 minefieldView.getMinefield().displayCase(row, col);
                 minefieldView.updateView(row, col);
-
-                //$(this).text('B');
             }
         },
         // Right click action.
         contextmenu : function() {
             if (!$(this).text().match(regex_right_click)) {
-                // if symbol not equals 'X', so flag case, else remove flag,
-                if($(this).text() != "X") {
-                    $(this).text('X');
+                // if symbol not equals '!', so flag case, else remove flag,
+                if($(this).text() != "!") {
+                    // Block number of mine mark.
+                    minefieldView.getMinefield().setCurrentMarkMine(minefieldView.getMinefield().getCurrentMarkMine() - 1);
+                    $(this).text('!');
+                    $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
                 } else {
+                    minefieldView.getMinefield().setCurrentMarkMine(minefieldView.getMinefield().getCurrentMarkMine() + 1);
                     $(this).text('$');
+                    $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
                 }
             }
         },
@@ -113,6 +116,7 @@ $(window).on('load', function() {
 
         console.log('Easy Minefield generated');
         undisplay_difficulty_nav();
+        $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
     }); // #mine-easy-difficulty click
 
     /**
@@ -205,7 +209,7 @@ $(document).ready(function() {
 }); // document ready
 
 /**
- * Uility function use for undisplay difficulty menu.
+ * Utility function use for undisplay difficulty menu.
  *
  * @since Mine 2.0
  * @version 1.0
@@ -215,4 +219,3 @@ function undisplay_difficulty_nav() {
         'display' : 'none',
     }); // #mine-nav-difficulty css
 }
-

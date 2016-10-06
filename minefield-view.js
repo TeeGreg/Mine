@@ -80,6 +80,7 @@ MinefieldView.prototype.updateView = function(row, col) {
         // Loop ? Because when the 0 is reveal, all 0 around not reveal too.
         if (this.minefield.getHelp(row, col) === 0) {
             this.minefield.setGuess(row, col);
+            $('#r' + row + '-c' + col).addClass('n' + this.minefield.getHelp(row, col));
             $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col));
             this.viewboard[row][col] = true;
             this.updateView(row + 1, col + 1);
@@ -93,6 +94,7 @@ MinefieldView.prototype.updateView = function(row, col) {
         }
         // Reveal case with other content, except bomb.
         else {
+            $('#r' + row + '-c' + col).addClass('n' + this.minefield.getHelp(row, col));
             $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col));
             this.minefield.setGuess(row, col);
             this.viewboard[row][col] = true;

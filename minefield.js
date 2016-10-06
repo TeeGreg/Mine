@@ -25,6 +25,7 @@ function Minefield(row, col, mine_number) {
     this.help  = new Array();
     this.guess = new Array();
     this.max_mine = mine_number;
+    this.current_mark_mine = mine_number;
 
     // Loop on all row of the minefield.
     for (var line = 0; line < row; line++) {
@@ -211,6 +212,39 @@ Minefield.prototype.getGuess = function(row, col)  {
 Minefield.prototype.setGuess = function(row, col)  {
     this.guess[row][col] = true;
 };
+
+/**
+ * Return the number of Mine mark.
+ *
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.getCurrentMarkMine = function() {
+    return this.current_mark_mine;
+};
+
+/**
+ * Set the number of mine mark.
+ *
+ * @param integer mark_mine_nb
+ *  The new value of current mark mine.
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.setCurrentMarkMine = function(mark_mine_nb) {
+    this.current_mark_mine = mark_mine_nb;
+};
+
+
+/**
+ * Return the number of Mine on minefield.
+ *
+ * @since Mine 2.0
+ * @version 0.1
+ */
+Minefield.prototype.getMaxMine = function() {
+    return this.max_mine;
+}
 
 /**
  * Test if the coordinates are good or false.
