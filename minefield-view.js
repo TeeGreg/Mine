@@ -21,7 +21,20 @@
  */
 function MinefieldView(minefield) {
     this.minefield = minefield;
+    this.viewboard = new Array();
+    
+    // Loop on all row of the minefield.
+    for (var line = 0; line < minefield.getRowCount(); line++) {
+        // Create at each row a new array for generate array at 2 dimensions.
+        this.viewboard[line]  = new Array();
 
+
+        // Fill all array with initial value.
+        for (var column = 0; column <  minefield.getColoumnCount(); column++) {
+            this.viewboard[line][column]  = false;
+
+        }
+    }
     // Research table.
     var minefield = document.getElementById('mine-minefield-table');
 
@@ -56,6 +69,9 @@ function MinefieldView(minefield) {
  * @version 0.1
  */
 MinefieldView.prototype.updateView = function(row, col) {
+    if (!this.minefield.testCoordinate(row, col)) return;
+    if (this.viewboard[row][col] !== false) return;
+    
     // Game lost.
     if (this.minefield.fail(row, col)) {
         $('#r' + row + '-c' + col).text('B');
@@ -65,11 +81,21 @@ MinefieldView.prototype.updateView = function(row, col) {
         if (this.minefield.getHelp(row, col) === 0) {
             this.minefield.setGuess(row, col);
             $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col));
+            this.viewboard[row][col] = true;
+            this.updateView(row + 1, col + 1);
+            this.updateView(row + 1, col    );
+            this.updateView(row + 1, col - 1);
+            this.updateView(row - 1, col + 1);
+            this.updateView(row - 1, col    );
+            this.updateView(row - 1, col - 1);
+            this.updateView(row    , col + 1);
+            this.updateView(row    , col - 1);            
         }
         // Reveal case with other content, except bomb.
         else {
             $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col));
             this.minefield.setGuess(row, col);
+            this.viewboard[row][col] = true;
         }
     }
 };
