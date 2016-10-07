@@ -75,14 +75,14 @@ MinefieldView.prototype.updateView = function(row, col) {
     // Game lost.
     if (this.minefield.fail(row, col)) {
         $('#r' + row + '-c' + col).text('B');
-        $('#mine-result-game').text('You loose !');
-        this.minefieldView.getMinefield().setCanPlay(false);
+        $('#mine-result-game').text('You lose !');
+        this.minefield.setCanPlay(false);
     } else {
-        // Loop ? Because when the 0 is reveal, all 0 around not reveal too.
+        // if current Help equals 0, reveal all 0 around current cases.
         if (this.minefield.getHelp(row, col) === 0) {
             this.minefield.setGuess(row, col);
             $('#r' + row + '-c' + col).addClass('n' + this.minefield.getHelp(row, col));
-            $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col));
+            $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col)).removeClass('flag');
             this.viewboard[row][col] = true;
             this.updateView(row + 1, col + 1);
             this.updateView(row + 1, col    );

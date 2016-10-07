@@ -59,30 +59,38 @@ $(window).on('load', function() {
             });
         },
         // Left click action.
-        click : function() {
-            if (!$(this).text().match(regex_left_click)) {
-                var split = $(this).attr('id').split('-');
-                var row = new Number(split[0].substring(1));
-                var col = new Number(split[1].substring(1));
+        click : function(e) {
+            if (minefieldView.getMinefield().getCanPlay() === false) {
+                e.preventDefault();
+            } else {
+                if (!$(this).text().match(regex_left_click)) {
+                    var split = $(this).attr('id').split('-');
+                    var row = new Number(split[0].substring(1));
+                    var col = new Number(split[1].substring(1));
 
-                // Reveal 0 case around case play.
-                minefieldView.getMinefield().displayCase(row, col);
-                minefieldView.updateView(row, col);
+                    // Reveal 0 case around case play.
+                    minefieldView.getMinefield().displayCase(row, col);
+                    minefieldView.updateView(row, col);
+                }
             }
         },
         // Right click action.
-        contextmenu : function() {
-            if (!$(this).text().match(regex_right_click)) {
-                // if symbol not equals '!', so flag case, else remove flag,
-                if($(this).text() != "!") {
-                    // Block number of mine mark.
-                    minefieldView.getMinefield().setCurrentMarkMine(minefieldView.getMinefield().getCurrentMarkMine() - 1);
-                    $(this).text('!').addClass('flag');
-                    $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
-                } else {
-                    minefieldView.getMinefield().setCurrentMarkMine(minefieldView.getMinefield().getCurrentMarkMine() + 1);
-                    $(this).text('$');
-                    $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
+        contextmenu : function(e) {
+            if (minefieldView.getMinefield().getCanPlay() === false) {
+                e.preventDefault();
+            } else {
+                if (!$(this).text().match(regex_right_click)) {
+                    // if symbol not equals '!', so flag case, else remove flag,
+                    if($(this).text() != "!") {
+                        // Block number of mine mark.
+                        minefieldView.getMinefield().setCurrentMarkMine(minefieldView.getMinefield().getCurrentMarkMine() - 1);
+                        $(this).text('!').addClass('flag');
+                        $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
+                    } else {
+                        minefieldView.getMinefield().setCurrentMarkMine(minefieldView.getMinefield().getCurrentMarkMine() + 1);
+                        $(this).text('$').removeClass('flag');
+                        $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
+                    }
                 }
             }
         },
@@ -206,6 +214,7 @@ $(document).ready(function() {
         $('#mine-minefield-table tr').remove();
         $('#mine-result-game').text('');
         $('#mine-help-game').text('');
+        $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
         minefieldView = new MinefieldView(new Minefield(minefield.getRowCount(), minefield.getColoumnCount(), minefield.getMaxMine()));
     }); // #mine-reset-game click
 }); // document ready

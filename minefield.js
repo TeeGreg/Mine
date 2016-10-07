@@ -26,6 +26,7 @@ function Minefield(row, col, mine_number) {
     this.guess = new Array();
     this.max_mine = mine_number;
     this.current_mark_mine = mine_number;
+    this.current_case_reveal = 0;
     this.canPlay = true;
 
     // Loop on all row of the minefield.
@@ -83,6 +84,7 @@ Minefield.prototype.updateGuess = function(row, col) {
     // If click case not click before, mark it like clicked.
     if (this.guess[row][col] == false) {
         this.guess[row][col] = true;
+        this.current_case_reveal++;
 
         // If help array contains 0, then it reveal other case all around the 0 case.
         if (this.help[row][col] == 0) {
@@ -270,6 +272,19 @@ Minefield.prototype.setCanPlay = function(canPlay) {
  */
 Minefield.prototype.getCanPlay = function() {
     return this.canPlay;
+}
+
+
+/**
+ * Return the number of case reveal during a party.
+ *
+ * @return integer
+ *  Return the number of case reveal in game.
+ * @since Mine 2.0
+ * @version 1.0
+ */
+Minefield.prototype.getCurrentCaseReveal = function() {
+    return this.current_case_reveal;
 }
 
 /**
