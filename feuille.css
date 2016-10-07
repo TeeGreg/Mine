@@ -46,15 +46,19 @@ color: silver;
 .n1 {
 color: #1a1aff;
 }
+
 .n2 {
 color: #33cc33;
 }
+
 .n3 {
 color: #cc0000;
 }
+
 .n4 {
 color: #0000b3;
 }
+
 .n5 {
 color: #6600cc;
 }
@@ -62,14 +66,15 @@ color: #6600cc;
 .n6 {
 color: #00ff99;
 }
+
 .n7 {
 color: #000000;
 }
+
 .n8 {
 color: #f2f2f2;
 }
 
-/* Bold characters on mine table */
-.bold {
-    font-weight: bold;
+.flag {
+    color: #1C1CFF;
 }

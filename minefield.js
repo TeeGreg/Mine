@@ -1,9 +1,9 @@
 /**
  * Minefield class represent the 2D array use on game.
  *
- * @author Kero76, TeeGreg
+ * @author TeeGreg, Kero76
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 
 /**
@@ -17,7 +17,7 @@
  * @param integer mine_number
  *  Number of bomb placed on minefield.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 function Minefield(row, col, mine_number) {
     // Initialized constructor attributes.
@@ -26,6 +26,7 @@ function Minefield(row, col, mine_number) {
     this.guess = new Array();
     this.max_mine = mine_number;
     this.current_mark_mine = mine_number;
+    this.canPlay = true;
 
     // Loop on all row of the minefield.
     for (var line = 0; line < row; line++) {
@@ -76,7 +77,7 @@ function Minefield(row, col, mine_number) {
  * @param integer col
  *  Column explore.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.updateGuess = function(row, col) {
     // If click case not click before, mark it like clicked.
@@ -108,7 +109,7 @@ Minefield.prototype.updateGuess = function(row, col) {
  * @param integer col
  *  Column explore.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.markMine = function(row, col) {
     // Mark case because possible mine here
@@ -137,7 +138,7 @@ Minefield.prototype.markMine = function(row, col) {
  * @param integer col
  *  Column explore.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.displayCase = function(row, col) {
     this.updateGuess(row, col);
@@ -149,7 +150,7 @@ Minefield.prototype.displayCase = function(row, col) {
  * @return integer
  *  Return the number of line in the minefield.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.getRowCount = function() {
     return this.guess.length;
@@ -161,7 +162,7 @@ Minefield.prototype.getRowCount = function() {
  * @return integer
  *  Return the number of column in the minefield.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.getColoumnCount = function() {
     return this.guess[0].length;
@@ -177,7 +178,7 @@ Minefield.prototype.getColoumnCount = function() {
  * @return number
  *  Return the specific case on Help array.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.getHelp = function(row, col)  {
     return this.help[row][col];
@@ -193,7 +194,7 @@ Minefield.prototype.getHelp = function(row, col)  {
  * @return boolean
  *  Return the specific case on Guess array.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.getGuess = function(row, col)  {
     return this.guess[row][col];
@@ -207,7 +208,7 @@ Minefield.prototype.getGuess = function(row, col)  {
  * @param integer col
  *  The current col used.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.setGuess = function(row, col)  {
     this.guess[row][col] = true;
@@ -217,7 +218,7 @@ Minefield.prototype.setGuess = function(row, col)  {
  * Return the number of Mine mark.
  *
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.getCurrentMarkMine = function() {
     return this.current_mark_mine;
@@ -229,7 +230,7 @@ Minefield.prototype.getCurrentMarkMine = function() {
  * @param integer mark_mine_nb
  *  The new value of current mark mine.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.setCurrentMarkMine = function(mark_mine_nb) {
     this.current_mark_mine = mark_mine_nb;
@@ -240,10 +241,35 @@ Minefield.prototype.setCurrentMarkMine = function(mark_mine_nb) {
  * Return the number of Mine on minefield.
  *
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.getMaxMine = function() {
     return this.max_mine;
+}
+
+/**
+ * Set the boolean canPlay.
+ *
+ * @param boolean canPlay
+ *  The boolean canPlay
+ * @since Mine 2.0
+ * @version 1.0
+ */
+Minefield.prototype.setCanPlay = function(canPlay) {
+    this.canPlay = canPlay;
+};
+
+
+/**
+ * Return the number of Mine on minefield.
+ *
+ * @return boolean
+ *  Return if player can play.
+ * @since Mine 2.0
+ * @version 1.0
+ */
+Minefield.prototype.getCanPlay = function() {
+    return this.canPlay;
 }
 
 /**
@@ -256,7 +282,7 @@ Minefield.prototype.getMaxMine = function() {
  * @return boolean
  *  The statement of the boolean expression.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.testCoordinate = function(row, col)  {
     return 0 <= row && row < this.getRowCount() && 0 <= col && col < this.getColoumnCount();
@@ -272,7 +298,7 @@ Minefield.prototype.testCoordinate = function(row, col)  {
  * @return number
  *  A random generated number between min and max value.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.rand = function(min, max) {
     return Math.floor((Math.random() * (max - min + 1)) + min);
@@ -288,7 +314,7 @@ Minefield.prototype.rand = function(min, max) {
  * @return boolean
  *  Return the statement of the mine case.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 Minefield.prototype.fail = function(row, col) {
     return this.mine[row][col];

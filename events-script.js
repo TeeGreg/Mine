@@ -1,6 +1,6 @@
 /**
- * This file contains all eveents present in game.
- *
+ * This file contains all events present in game.
+ * 
  * @author Kero76
  * @since Mine 2.0
  * @version 1.0
@@ -77,7 +77,7 @@ $(window).on('load', function() {
                 if($(this).text() != "!") {
                     // Block number of mine mark.
                     minefieldView.getMinefield().setCurrentMarkMine(minefieldView.getMinefield().getCurrentMarkMine() - 1);
-                    $(this).text('!');
+                    $(this).text('!').addClass('flag');
                     $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
                 } else {
                     minefieldView.getMinefield().setCurrentMarkMine(minefieldView.getMinefield().getCurrentMarkMine() + 1);
@@ -98,7 +98,6 @@ $(window).on('load', function() {
         $('#mine-nav-difficulty').css({
             'display' : 'block',
         }); // #mine-nav-difficulty css
-        $(this).prop('disabled', true); // Disable button after clicking on it.
     }); // #mine-start-game click
 
     /**
@@ -108,13 +107,10 @@ $(window).on('load', function() {
      * @version 1.0
      */
     $('#mine-easy-difficulty').click(function() {
-
+        $('#mine-minefield-table tr').remove();
         // Create Minefield and MinefieldView.
         minefield     = new Minefield(10, 10, 10);
         minefieldView = new MinefieldView(minefield);
-
-
-        console.log('Easy Minefield generated');
         undisplay_difficulty_nav();
         $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
     }); // #mine-easy-difficulty click
@@ -126,14 +122,12 @@ $(window).on('load', function() {
      * @version 1.0
      */
     $('#mine-medium-difficulty').click(function() {
-
+        $('#mine-minefield-table tr').remove();
         // Create Minefield and MinefieldView.
         minefield     = new Minefield(15, 15, 30);
         minefieldView = new MinefieldView(minefield);
-
-
-        console.log('Medium Minefield generated');
         undisplay_difficulty_nav();
+        $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
     }); // #mine-meduim-difficulty click
 
     /**
@@ -143,14 +137,12 @@ $(window).on('load', function() {
      * @version 1.0
      */
     $('#mine-hard-difficulty').click(function() {
-
+        $('#mine-minefield-table tr').remove();
         // Create Minefield and MinefieldView.
         minefield     = new Minefield(25, 25, 70);
         minefieldView = new MinefieldView(minefield);
-
-
-        console.log('Hard Minefield generated');
         undisplay_difficulty_nav();
+        $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
     }); // #mine-hard-difficulty click
 
     /**
@@ -160,14 +152,12 @@ $(window).on('load', function() {
      * @version 1.0
      */
     $('#mine-suicide-difficulty').click(function() {
-
+        $('#mine-minefield-table tr').remove();
         // Create Minefield and MinefieldView.
         minefield     = new Minefield(20, 20, 399);
         minefieldView = new MinefieldView(minefield);
-
-
-        console.log('Suicide Minefield generated');
         undisplay_difficulty_nav();
+        $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
     }); // #mine-suicide-difficulty click
 }); // window on
 
@@ -189,7 +179,17 @@ $(document).ready(function() {
         e.preventDefault();
         return false;
     }); // document on
-
+    
+    /**
+     * Disabled mouse selection.
+     *
+     * @since Mine 2.0
+     * @version 1.0
+     */
+    $(document).mousedown(function(e) {
+        e.preventDefault();
+    });
+    
     /**
      * Event generate by Reset button click.
      *
@@ -205,6 +205,8 @@ $(document).ready(function() {
         $('#mine-start-game').prop('disabled', false);
         $('#mine-minefield-table tr').remove();
         $('#mine-result-game').text('');
+        $('#mine-help-game').text('');
+        minefieldView = new MinefieldView(new Minefield(minefield.getRowCount(), minefield.getColoumnCount(), minefield.getMaxMine()));
     }); // #mine-reset-game click
 }); // document ready
 

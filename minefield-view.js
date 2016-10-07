@@ -1,9 +1,9 @@
 /**
  * MinefieldView class represent the view of the Minefield class.
  *
- * @author Kero76
+ * @author Kero76, TeeGreg
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 
 /**
@@ -17,7 +17,7 @@
  * @param integer mine_number
  *  Number of bomb placed on minefield.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 function MinefieldView(minefield) {
     this.minefield = minefield;
@@ -66,7 +66,7 @@ function MinefieldView(minefield) {
  * @param integer col
  *  Column where player click.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 MinefieldView.prototype.updateView = function(row, col) {
     if (!this.minefield.testCoordinate(row, col)) return;
@@ -76,6 +76,7 @@ MinefieldView.prototype.updateView = function(row, col) {
     if (this.minefield.fail(row, col)) {
         $('#r' + row + '-c' + col).text('B');
         $('#mine-result-game').text('You loose !');
+        this.minefieldView.getMinefield().setCanPlay(false);
     } else {
         // Loop ? Because when the 0 is reveal, all 0 around not reveal too.
         if (this.minefield.getHelp(row, col) === 0) {
@@ -103,13 +104,25 @@ MinefieldView.prototype.updateView = function(row, col) {
 };
 
 /**
- *  Return the Minefield Model.
+ * Return the Minefield Model.
  *
  * @return Minefield
  *  Return the model of the View.
  * @since Mine 2.0
- * @version 0.1
+ * @version 1.0
  */
 MinefieldView.prototype.getMinefield = function() {
     return this.minefield;
+};
+
+/**
+ * Set the Minefield Model.
+ *
+ * @param minefield
+ *  The new model.
+ * @since Mine 2.0
+ * @version 1.0
+ */
+MinefieldView.prototype.setMinefield = function(minefield) {
+    this.minefield = minefield;
 };
