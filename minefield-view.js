@@ -10,12 +10,8 @@
  * Constructor of the class MinefieldView which represent the minefield view on Game.
  *
  * @constructor
- * @param integer row
- *  Number of row for the minefield.
- * @param integer col
- *  Number of column for the minefield.
- * @param integer mine_number
- *  Number of bomb placed on minefield.
+ * @param Minefield minefield
+ *  The model of the view.
  * @since Mine 2.0
  * @version 1.0
  */
@@ -24,31 +20,29 @@ function MinefieldView(minefield) {
     this.viewboard = new Array();
     
     // Loop on all row of the minefield.
-    for (var line = 0; line < minefield.getRowCount(); line++) {
+    for (var line = 0; line < this.minefield.getRowCount(); line++) {
         // Create at each row a new array for generate array at 2 dimensions.
-        this.viewboard[line]  = new Array();
-
+        this.viewboard[line] = new Array();
 
         // Fill all array with initial value.
-        for (var column = 0; column <  minefield.getColoumnCount(); column++) {
+        for (var column = 0; column <  this.minefield.getColumnCount(); column++) {
             this.viewboard[line][column]  = false;
-
         }
     }
     // Research table.
-    var minefield = document.getElementById('mine-minefield-table');
+    var minefieldTable = document.getElementById('mine-minefield-table');
 
     // Initialized variables.
-    var tr = '';
-    var td = '';
+    var tr = null;
+    var td = null;
     var text = '';
 
     // Loop for generate all tr on table.
     for (var tr_index = 0; tr_index < this.minefield.getRowCount(); tr_index++) {
         tr = document.createElement('tr');
-        minefield.appendChild(tr);
+        minefieldTable.appendChild(tr);
         // Loop for generate all buttons on td and td on tr.
-        for (var td_index = 0; td_index < this.minefield.getColoumnCount(); td_index++) {
+        for (var td_index = 0; td_index < this.minefield.getColumnCount(); td_index++) {
             td = document.createElement('td');
             td.setAttribute('id', 'r' + tr_index + '-c' + td_index); // Use for retrieve coordinate on JQuery
             text = document.createTextNode('$');
@@ -81,8 +75,7 @@ MinefieldView.prototype.updateView = function(row, col) {
         // if current Help equals 0, reveal all 0 around current cases.
         if (this.minefield.getHelp(row, col) === 0) {
             this.minefield.setGuess(row, col);
-            $('#r' + row + '-c' + col).addClass('n' + this.minefield.getHelp(row, col));
-            $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col)).removeClass('flag');
+            $('#r' + row + '-c' + col).addClass('n' + this.minefield.getHelp(row, col)).text(this.minefield.getHelp(row, col)).removeClass('flag');
             this.viewboard[row][col] = true;
             this.updateView(row + 1, col + 1);
             this.updateView(row + 1, col    );
@@ -95,8 +88,7 @@ MinefieldView.prototype.updateView = function(row, col) {
         }
         // Reveal case with other content, except bomb.
         else {
-            $('#r' + row + '-c' + col).addClass('n' + this.minefield.getHelp(row, col));
-            $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col));
+            $('#r' + row + '-c' + col).addClass('n' + this.minefield.getHelp(row, col)).text(this.minefield.getHelp(row, col));
             this.minefield.setGuess(row, col);
             this.viewboard[row][col] = true;
         }

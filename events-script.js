@@ -217,7 +217,7 @@ $(document).ready(function() {
         $('#mine-result-game').text('');
         $('#mine-help-game').text('');
         $('#mine-help-game').text(minefieldView.getMinefield().getCurrentMarkMine() + ' mines remaining');
-        minefieldView = new MinefieldView(new Minefield(minefield.getRowCount(), minefield.getColoumnCount(), minefield.getMaxMine()));
+        minefieldView = new MinefieldView(new Minefield(minefield.getRowCount(), minefield.getColumnCount(), minefield.getMaxMine()));
     }); // #mine-reset-game click
 }); // document ready
 

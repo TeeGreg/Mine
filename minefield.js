@@ -10,11 +10,11 @@
  * Constructor of the class Minefield which represent the minefield who played the player.
  *
  * @constructor
- * @param integer row
+ * @param number row
  *  Number of row for the minefield.
- * @param integer col
+ * @param number col
  *  Number of column for the minefield.
- * @param integer mine_number
+ * @param number mine_number
  *  Number of bomb placed on minefield.
  * @since Mine 2.0
  * @version 1.0
@@ -69,13 +69,13 @@ function Minefield(row, col, mine_number) {
 /**
  * Function use for update Guess array after player action in minefield.
  *
- * This function is call only if the current case not clicked before player'action.
+ * This function is call only if the current case not clicked before player's action.
  * In fact, we can click on case only if this case not played before.
  * Otherwise, we can't click on this case, and don't calling this function.
  *
- * @param integer row
+ * @param number row
  *  Row explore.
- * @param integer col
+ * @param number col
  *  Column explore.
  * @since Mine 2.0
  * @version 1.0
@@ -106,9 +106,9 @@ Minefield.prototype.updateGuess = function(row, col) {
  * This function is use when a player use right click for mark position
  * in minefield. We call this function when we catch a contextmenu event.
  *
- * @param integer row
+ * @param number row
  *  Row explore.
- * @param integer col
+ * @param number col
  *  Column explore.
  * @since Mine 2.0
  * @version 1.0
@@ -135,9 +135,9 @@ Minefield.prototype.markMine = function(row, col) {
  * call directly updateGuess, but it's more simply to call displayCase
  * when left click event is catching.
  *
- * @param integer row
+ * @param number row
  *  Row explore.
- * @param integer col
+ * @param number col
  *  Column explore.
  * @since Mine 2.0
  * @version 1.0
@@ -166,16 +166,16 @@ Minefield.prototype.getRowCount = function() {
  * @since Mine 2.0
  * @version 1.0
  */
-Minefield.prototype.getColoumnCount = function() {
+Minefield.prototype.getColumnCount = function() {
     return this.guess[0].length;
 };
 
 /**
  * This function return the specific case on Help array.
  *
- * @param integer row
+ * @param number row
  *  The current row used.
- * @param integer col
+ * @param number col
  *  The current col used.
  * @return number
  *  Return the specific case on Help array.
@@ -189,9 +189,9 @@ Minefield.prototype.getHelp = function(row, col)  {
 /**
  * This function return the specific case on Guess array.
  *
- * @param integer row
+ * @param number row
  *  The current row used.
- * @param integer col
+ * @param number col
  *  The current col used.
  * @return boolean
  *  Return the specific case on Guess array.
@@ -205,9 +205,9 @@ Minefield.prototype.getGuess = function(row, col)  {
 /**
  * Set the specific case on Guess array.
  *
- * @param integer row
+ * @param number row
  *  The current row used.
- * @param integer col
+ * @param number col
  *  The current col used.
  * @since Mine 2.0
  * @version 1.0
@@ -219,6 +219,8 @@ Minefield.prototype.setGuess = function(row, col)  {
 /**
  * Return the number of Mine mark.
  *
+ * @return number
+ *  Return the number of mine mark.
  * @since Mine 2.0
  * @version 1.0
  */
@@ -229,7 +231,7 @@ Minefield.prototype.getCurrentMarkMine = function() {
 /**
  * Set the number of mine mark.
  *
- * @param integer mark_mine_nb
+ * @param number mark_mine_nb
  *  The new value of current mark mine.
  * @since Mine 2.0
  * @version 1.0
@@ -242,6 +244,8 @@ Minefield.prototype.setCurrentMarkMine = function(mark_mine_nb) {
 /**
  * Return the number of Mine on minefield.
  *
+ * @return number
+ *  Return the number of mine present on minefield.
  * @since Mine 2.0
  * @version 1.0
  */
@@ -278,7 +282,7 @@ Minefield.prototype.getCanPlay = function() {
 /**
  * Return the number of case reveal during a party.
  *
- * @return integer
+ * @return number
  *  Return the number of case reveal in game.
  * @since Mine 2.0
  * @version 1.0
@@ -290,9 +294,9 @@ Minefield.prototype.getCurrentCaseReveal = function() {
 /**
  * Test if the coordinates are good or false.
  *
- * @param integer row
+ * @param number row
  *  The current row used.
- * @param integer col
+ * @param number col
  *  The current col used.
  * @return boolean
  *  The statement of the boolean expression.
@@ -300,15 +304,15 @@ Minefield.prototype.getCurrentCaseReveal = function() {
  * @version 1.0
  */
 Minefield.prototype.testCoordinate = function(row, col)  {
-    return 0 <= row && row < this.getRowCount() && 0 <= col && col < this.getColoumnCount();
+    return 0 <= row && row < this.getRowCount() && 0 <= col && col < this.getColumnCount();
 };
 
 /**
  * Function generated random number.
  *
- * @param integer min
+ * @param number min
  *  The minimum value of random.
- * @param integer max
+ * @param number max
  *  The maximum value of random.
  * @return number
  *  A random generated number between min and max value.
@@ -322,9 +326,9 @@ Minefield.prototype.rand = function(min, max) {
 /**
  * Function use for test if the player have click on mine or not.
  *
- * @param integer row
+ * @param number row
  *  The row of the case at see if the mine is under the case.
- * @param integer col
+ * @param number col
  *  The column of the case at see if the mine is under the case.
  * @return boolean
  *  Return the statement of the mine case.
@@ -348,7 +352,7 @@ Minefield.prototype.fail = function(row, col) {
  * @version 1.0
  */
 Minefield.prototype.win = function() {
-    if (((this.getRowCount() * this.getColoumnCount() -  this.getMaxMine()) - this.getCurrentCaseReveal()) === 0) {
+    if (((this.getRowCount() * this.getColumnCount() -  this.getMaxMine()) - this.getCurrentCaseReveal()) === 0) {
         return true;
     }
     return false;
