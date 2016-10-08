@@ -2,29 +2,26 @@ html {
     margin: 10px;
 }
 
-table  {
-border: 2px solid silver;
-border-collapse: collapse;
-}
-
-td  {
-border: 2px solid silver;
-border-collapse: collapse;
-width: 20px;
-height: 20px;
-text-align: center;
-}
-
-td button  {
-border: 2px solid silver;
-border-collapse: collapse;
-width: 20px;
-height: 20px;
-text-align: center;
+/*
+ * Minefield.
+ */
+table {
+    border: 2px solid silver;
+    border-collapse: collapse;
+    text-align: center;
 }
 
 /**
- * Difficulty nav display after Start Game button click.
+ * Case rpesent on Minefield.
+ */ 
+td {
+    border: 2px solid silver;
+    width: 20px;
+    height: 20px;
+}
+
+/**
+ * Difficulty menu.
  */
 #mine-nav-difficulty {
     margin-top: 10px;
@@ -32,50 +29,25 @@ text-align: center;
 }
 
 /**
- * Minefield element for played.
+ * Div who contains minefield.
  */
 #mine-minefield-canvas {
     margin-top: 10px;
 }
 
-
-.n0 {
-color: silver;
-}
-
-.n1 {
-color: #1a1aff;
-}
-
-.n2 {
-color: #33cc33;
-}
-
-.n3 {
-color: #cc0000;
-}
-
-.n4 {
-color: #0000b3;
-}
-
-.n5 {
-color: #6600cc;
-}
-
-.n6 {
-color: #00ff99;
-}
-
-.n7 {
-color: #000000;
-}
-
-.n8 {
-color: #f2f2f2;
-}
+/************************************/
+/*           CASE ELEMENTS          */
+/************************************/
+/* Help case coloration instead of the content case */
+.n0 { color: silver;  }
+.n1 { color: #1a1aff; }
+.n2 { color: #33cc33; }
+.n3 { color: #cc0000; }
+.n4 { color: #0000b3; }
+.n5 { color: #6600cc; }
+.n6 { color: #00ff99; }
+.n7 { color: #000000; }
+.n8 { color: #f2f2f2; }
 
 /* Represent a flag for mark possible mine in minefield. */
-.flag {
-    color: #930031;
-}
+.flag { color: #930031; }

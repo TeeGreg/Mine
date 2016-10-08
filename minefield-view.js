@@ -72,7 +72,7 @@ MinefieldView.prototype.updateView = function(row, col) {
     if (!this.minefield.testCoordinate(row, col)) return;
     if (this.viewboard[row][col] !== false) return;
     
-    // Game lost.
+    // Game lost, display a Bomb symbol and display message.
     if (this.minefield.fail(row, col)) {
         $('#r' + row + '-c' + col).text('B');
         $('#mine-result-game').text('You lose !');
@@ -91,7 +91,7 @@ MinefieldView.prototype.updateView = function(row, col) {
             this.updateView(row - 1, col    );
             this.updateView(row - 1, col - 1);
             this.updateView(row    , col + 1);
-            this.updateView(row    , col - 1);            
+            this.updateView(row    , col - 1);
         }
         // Reveal case with other content, except bomb.
         else {
@@ -99,6 +99,12 @@ MinefieldView.prototype.updateView = function(row, col) {
             $('#r' + row + '-c' + col).text(this.minefield.getHelp(row, col));
             this.minefield.setGuess(row, col);
             this.viewboard[row][col] = true;
+        }
+        
+        // The victory condition are reached, so it block the minefield case click and display a victory message.
+        if (this.minefield.win()) {
+            $('#mine-result-game').text('You win !');
+            this.minefield.setCanPlay(false);
         }
     }
 };

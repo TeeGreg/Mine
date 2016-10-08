@@ -27,7 +27,7 @@ function Minefield(row, col, mine_number) {
     this.max_mine = mine_number;
     this.current_mark_mine = mine_number;
     this.current_case_reveal = 0;
-    this.canPlay = true;
+    this.can_play = true;
 
     // Loop on all row of the minefield.
     for (var line = 0; line < row; line++) {
@@ -250,15 +250,15 @@ Minefield.prototype.getMaxMine = function() {
 }
 
 /**
- * Set the boolean canPlay.
+ * Set the boolean can_play.
  *
- * @param boolean canPlay
- *  The boolean canPlay
+ * @param boolean can_play
+ *  The boolean can_play
  * @since Mine 2.0
  * @version 1.0
  */
-Minefield.prototype.setCanPlay = function(canPlay) {
-    this.canPlay = canPlay;
+Minefield.prototype.setCanPlay = function(can_play) {
+    this.can_play = can_play;
 };
 
 
@@ -271,7 +271,7 @@ Minefield.prototype.setCanPlay = function(canPlay) {
  * @version 1.0
  */
 Minefield.prototype.getCanPlay = function() {
-    return this.canPlay;
+    return this.can_play;
 }
 
 
@@ -333,4 +333,23 @@ Minefield.prototype.rand = function(min, max) {
  */
 Minefield.prototype.fail = function(row, col) {
     return this.mine[row][col];
+};
+
+/**
+ * Function use for test if the player win the party or not.
+ * 
+ * For compute the result, it check the number of case (row * column) which it substract the number of mine present in Minefield.
+ * At the result, it substract the number of current case reveal on party.
+ * If the result is 0, it return true. Otherwise, it return false and can continue to play.
+ *
+ * @return boolean
+ *  Return if the player win or not the game.
+ * @since Mine 2.0
+ * @version 1.0
+ */
+Minefield.prototype.win = function() {
+    if (((this.getRowCount() * this.getColoumnCount() -  this.getMaxMine()) - this.getCurrentCaseReveal()) === 0) {
+        return true;
+    }
+    return false;
 };

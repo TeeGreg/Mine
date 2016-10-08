@@ -60,6 +60,7 @@ $(window).on('load', function() {
         },
         // Left click action.
         click : function(e) {
+            // Party lost, player can't click on new minefield case.
             if (minefieldView.getMinefield().getCanPlay() === false) {
                 e.preventDefault();
             } else {
@@ -76,6 +77,7 @@ $(window).on('load', function() {
         },
         // Right click action.
         contextmenu : function(e) {
+            // Party lost, player can't click on new minefield case.
             if (minefieldView.getMinefield().getCanPlay() === false) {
                 e.preventDefault();
             } else {
