@@ -149,7 +149,7 @@ Minefield.prototype.displayCase = function(row, col) {
 /**
  * This function return the number of lines who composed Minefield.
  *
- * @return integer
+ * @return number
  *  Return the number of line in the minefield.
  * @since Mine 2.0
  * @version 1.0
@@ -161,7 +161,7 @@ Minefield.prototype.getRowCount = function() {
 /**
  * This function return the number of column who composed Minefield.
  *
- * @return integer
+ * @return number
  *  Return the number of column in the minefield.
  * @since Mine 2.0
  * @version 1.0

@@ -112,15 +112,3 @@ MinefieldView.prototype.updateView = function(row, col) {
 MinefieldView.prototype.getMinefield = function() {
     return this.minefield;
 };
-
-/**
- * Set the Minefield Model.
- *
- * @param minefield
- *  The new model.
- * @since Mine 2.0
- * @version 1.0
- */
-MinefieldView.prototype.setMinefield = function(minefield) {
-    this.minefield = minefield;
-};
